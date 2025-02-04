@@ -6,7 +6,7 @@ terraform {
     backend "local" {}
 }
 resource "aws_vpc" "my_VPC" {
-    cidr_block = "10.0.0.0/16"
+    cidr_block = "10.1.0.0/16"
     tags = {
         Name = "my_VPC"
     }
