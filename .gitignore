@@ -1,2 +1,5 @@
 TerraForm/.terraform/providers/registry.terraform.io/hashicorp/aws/5.85.0/windows_amd64/terraform-provider-aws_v5.85.0_x5.exe
-/TerraForm/.terraform
+/Demo/.terraform
+/Week1/.terraform
+/Week2/.terraform
+/Week3/.terraform
