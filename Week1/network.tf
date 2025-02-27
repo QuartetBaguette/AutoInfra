@@ -43,8 +43,8 @@ resource "aws_route_table_association" "prod-crta-public-subnet-1" {
   route_table_id = aws_route_table.RouteTableKlantA.id
 }
 
-resource "aws_security_group" "ssh_http_https_allow" {
-  name        = "ssh_http_https_allow"
+resource "aws_security_group" "ssh_http_https_outbound_allow" {
+  name        = "ssh_http_https_outbound_allow"
   description = "Allow SSH HTTP and HTTPS"
   vpc_id      = aws_vpc.KlantA.id
 
@@ -54,7 +54,7 @@ resource "aws_security_group" "ssh_http_https_allow" {
 }
 
 resource "aws_vpc_security_group_ingress_rule" "Allow_HTTPS" {
-  security_group_id = aws_security_group.ssh_http_https_allow.id
+  security_group_id = aws_security_group.ssh_http_https_outbound_allow.id
   cidr_ipv4         = "0.0.0.0/0"
   from_port         = 443
   ip_protocol       = "tcp"
@@ -62,7 +62,7 @@ resource "aws_vpc_security_group_ingress_rule" "Allow_HTTPS" {
 }
 
 resource "aws_vpc_security_group_ingress_rule" "Allow_HTTP" {
-  security_group_id = aws_security_group.ssh_http_https_allow.id
+  security_group_id = aws_security_group.ssh_http_https_outbound_allow.id
   cidr_ipv4         = "0.0.0.0/0"
   from_port         = 80
   ip_protocol       = "tcp"
@@ -70,9 +70,15 @@ resource "aws_vpc_security_group_ingress_rule" "Allow_HTTP" {
 }
 
 resource "aws_vpc_security_group_ingress_rule" "Allow_SSH" {
-  security_group_id = aws_security_group.ssh_http_https_allow.id
+  security_group_id = aws_security_group.ssh_http_https_outbound_allow.id
   cidr_ipv4         = "0.0.0.0/0"
   from_port         = 22
   ip_protocol       = "tcp"
   to_port           = 22
+}
+
+resource "aws_vpc_security_group_egress_rule" "Allow_Outbound" {
+  security_group_id = aws_security_group.ssh_http_https_outbound_allow.id
+  cidr_ipv4   = "0.0.0.0/0"
+  ip_protocol = -1
 }
