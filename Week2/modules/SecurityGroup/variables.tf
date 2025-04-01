@@ -1,3 +1,8 @@
+variable "vpc_id" {
+  type = string
+  description = "Needed for VPC id passtrough"
+}
+
 variable "https_allow_cidr" {
   type = string
   default = "0.0.0.0/0"

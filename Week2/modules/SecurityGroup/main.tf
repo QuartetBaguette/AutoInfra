@@ -1,7 +1,7 @@
 resource "aws_security_group" "ssh_http_https_outbound_allow" {
   name        = "ssh_http_https_outbound_allow"
   description = "Allow SSH HTTP and HTTPS"
-  vpc_id      = aws_vpc.KlantA.id
+  vpc_id      = var.vpc_id
 
   tags = {
     Name = "ssh_http_https_allow"

@@ -15,3 +15,13 @@ variable "instance_key_name" {
     default = "ruben"
     description = "Set ssh key for instance"
 }
+
+variable "security_group_ssh_http_https_outbound" {
+    type = string
+    description = "Id's of the security groups"
+} 
+
+variable "instance_subnet_id" {
+    type = string
+    description = "Set subnet for the instance"
+}
