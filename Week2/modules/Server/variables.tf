@@ -25,3 +25,8 @@ variable "instance_subnet_id" {
     type = string
     description = "Set subnet for the instance"
 }
+
+variable "instance_name" {
+    type = string
+    description = "Set name of instance"
+}
