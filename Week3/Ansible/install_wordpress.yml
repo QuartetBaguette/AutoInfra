@@ -1,0 +1,21 @@
+---
+- name: Install WordPress in Docker
+  hosts: testwebserver,productiewebservers
+  become: yes
+  tasks:
+    - name: Install Docker
+      import_playbook: "install_docker.yaml"
+      
+    - name: Start WordPress container
+      docker_container:
+        name: wordpress
+        image: wordpress
+        state: started
+        restart_policy: always
+        ports:
+          - "8080:80"
+        env:
+          WORDPRESS_DB_HOST: "db"
+          WORDPRESS_DB_USER: "user"
+          WORDPRESS_DB_PASSWORD: "Password123@"
+          WORDPRESS_DB_NAME: "wordpress"

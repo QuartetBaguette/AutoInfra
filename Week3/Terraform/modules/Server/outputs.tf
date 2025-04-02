@@ -1,3 +1,3 @@
 output "instance" {
-  value = aws_instance.instance.*.arn
+  value = aws_instance.web
 }

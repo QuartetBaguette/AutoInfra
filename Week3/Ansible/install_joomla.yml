@@ -1,0 +1,21 @@
+---
+- name: Installeer Joomla in Docker
+  hosts: testwebserver,productiewebservers
+  become: yes
+  tasks:
+    - name: Install Docker
+      import_playbook: "install_docker.yaml"
+      
+    - name: Start een Joomla-container
+      docker_container:
+        name: joomla
+        image: joomla
+        state: started
+        restart_policy: always
+        ports:
+          - "8090:80"
+        env:
+          JOOMLA_DB_HOST: "db"
+          JOOMLA_DB_USER: "user"
+          JOOMLA_DB_PASSWORD: "password"
+          JOOMLA_DB_NAME: "joomla"
