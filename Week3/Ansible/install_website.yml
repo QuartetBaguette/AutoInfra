@@ -1,8 +1,8 @@
 ---
 - name: Kies het type website
   hosts: testwebserver,productiewebservers
-  gather_facts: no
-  become: yes
+  gather_facts: false
+  become: true
 
   vars_prompt:
     - name: website_type
@@ -10,7 +10,10 @@
       private: no
 
   tasks:
-    - name: Installeer WordPress
+    - name: Installeer Docker
+      include_tasks: install_docker.yml
+
+    - name: Installeer Wordpress
       include_tasks: install_wordpress.yml
       when: website_type == "wordpress"
 
@@ -18,6 +21,6 @@
       include_tasks: install_joomla.yml
       when: website_type == "joomla"
 
-    - name: Installeer Apache
+    - name: Installeer Httpd
       include_tasks: install_httpd.yml
       when: website_type == "httpd"

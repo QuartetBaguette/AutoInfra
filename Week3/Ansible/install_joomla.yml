@@ -1,21 +1,30 @@
 ---
-- name: Installeer Joomla in Docker
-  hosts: testwebserver,productiewebservers
-  become: yes
-  tasks:
-    - name: Install Docker
-      import_playbook: "install_docker.yaml"
-      
-    - name: Start een Joomla-container
-      docker_container:
-        name: joomla
-        image: joomla
-        state: started
-        restart_policy: always
-        ports:
-          - "8090:80"
-        env:
-          JOOMLA_DB_HOST: "db"
-          JOOMLA_DB_USER: "user"
-          JOOMLA_DB_PASSWORD: "password"
-          JOOMLA_DB_NAME: "joomla"
+- name: Deploy MariaDB server
+  docker_container:
+    image: mariadb
+    name: mariadb
+    volumes:
+      - "mariadb:/var/lib/mysql"
+    env:
+      MYSQL_ROOT_PASSWORD: Password123@
+      MYSQL_PASSWORD: Password123@
+      MYSQL_DATABASE: db
+      MYSQL_USER: mysqluser
+
+- name: Start een Joomla-container
+  docker_container:
+    name: joomla
+    image: joomla
+    state: started
+    restart_policy: always
+    ports:
+      - "80:80"
+    links:
+      - "mariadb:/var/lib/mysql"
+    volumes:
+      - "joomla:/var/www/html"
+    env:
+      JOOMLA_DB_HOST: "mariadb"
+      JOOMLA_DB_USER: "mysqluser"
+      JOOMLA_DB_PASSWORD: "Password123@"
+      JOOMLA_DB_NAME: "joomla"
