@@ -1,0 +1,35 @@
+---
+- name: Install and Configure Nginx as Load Balancer
+  hosts: loadbalancer
+  become: yes
+  vars:
+    upstream_servers: []
+
+  tasks:
+    - name: Gather backend server IPs
+      set_fact:
+        upstream_servers: "{{ groups['productiewebservers'] | map('extract', hostvars, ['ansible_host']) | list }}"
+
+    - name: Install Nginx
+      yum:
+        name: nginx
+        state: present
+
+    - name: Ensure Nginx is started and enabled
+      systemd:
+        name: nginx
+        state: started
+        enabled: yes
+
+    - name: Configure Nginx as a Load Balancer
+      template:
+        src: nginx_lb.j2
+        dest: /etc/nginx/nginx.conf
+      notify:
+        - Restart Nginx
+
+  handlers:
+    - name: Restart Nginx
+      systemd:
+        name: nginx
+        state: restarted

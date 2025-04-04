@@ -1,6 +1,6 @@
 ---
 - name: Kies het type website
-  hosts: testwebserver,productiewebservers
+  hosts: productiewebservers
   gather_facts: false
   become: true
 
