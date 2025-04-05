@@ -1,0 +1,23 @@
+---
+- name: Install Httpd
+  yum:
+    name: httpd
+    state: present
+
+- name: Make sure Httpd is started
+  systemd:
+    name: httpd
+    state: started
+    enabled: true
+
+- name: Create welcomepage
+  copy:
+    dest: /var/www/html/index.html
+    content: |
+      <html>
+      <head><title>Welkom bij KlantA</title></head>
+      <body>
+      <h1>Welkom bij KlantA! Gemaakt door 552512</h1>
+      <p>Deze webserver is succesvol geïnstalleerd met Ansible</p>
+      </body>
+      </html>

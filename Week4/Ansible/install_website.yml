@@ -1,0 +1,26 @@
+---
+- name: Kies het type website
+  hosts: productiewebservers
+  gather_facts: false
+  become: true
+
+  vars_prompt:
+    - name: website_type
+      prompt: "Welk type website wil je installeren? (wordpress, joomla, httpd)"
+      private: no
+
+  tasks:
+    - name: Installeer Docker
+      include_tasks: install_docker.yml
+
+    - name: Installeer Wordpress
+      include_tasks: install_wordpress.yml
+      when: website_type == "wordpress"
+
+    - name: Installeer Joomla
+      include_tasks: install_joomla.yml
+      when: website_type == "joomla"
+
+    - name: Installeer Httpd
+      include_tasks: install_httpd.yml
+      when: website_type == "httpd"
