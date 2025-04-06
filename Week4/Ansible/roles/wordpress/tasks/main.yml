@@ -4,12 +4,12 @@
     image: mariadb
     name: mariadb
     volumes:
-      - "mariadb:/var/lib/mysql"
+      - "{{ mariadb_volume }}:/var/lib/mysql"
     env:
-      MYSQL_ROOT_PASSWORD: Password123@
-      MYSQL_PASSWORD: Password123@
-      MYSQL_DATABASE: db
-      MYSQL_USER: mysqluser
+      MYSQL_ROOT_PASSWORD: "{{ mariadb_root_password }}"
+      MYSQL_PASSWORD: "{{ mariadb_user_password }}"
+      MYSQL_DATABASE: "{{ mariadb_database }}"
+      MYSQL_USER: "{{ mariadb_user }}"
 
 - name: Start WordPress container
   docker_container:
@@ -20,11 +20,11 @@
     ports:
       - "80:80"
     links:
-      - "mariadb:/var/lib/mysql"
+      - "{{ mariadb_volume }}:/var/lib/mysql"
     volumes:
-      - "wordpress:/var/www/html"
+      - "{{ wordpress_volume }}:/var/www/html"
     env:
-      MYSQL_PASSWORD: Password123@
-      MYSQL_DATABASE: db
-      MYSQL_USER: mysqluser
+      MYSQL_PASSWORD: "{{ mariadb_user_password }}"
+      MYSQL_DATABASE: "{{ mariadb_database }}"
+      MYSQL_USER: "{{ mariadb_user }}"
       MYSQL_HOST: mariadb

@@ -9,18 +9,13 @@
       prompt: "Welk type website wil je installeren? (wordpress, joomla, httpd)"
       private: no
 
-  tasks:
-    - name: Installeer Docker
-      include_tasks: install_docker.yml
-
-    - name: Installeer Wordpress
-      include_tasks: install_wordpress.yml
+  roles:
+    - role: deploy-docker
+    - role: wordpress
       when: website_type == "wordpress"
 
-    - name: Installeer Joomla
-      include_tasks: install_joomla.yml
+    - role: joomla
       when: website_type == "joomla"
 
-    - name: Installeer Httpd
-      include_tasks: install_httpd.yml
+    - role: custom-website
       when: website_type == "httpd"

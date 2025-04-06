@@ -1,0 +1,20 @@
+#GENERAL
+klant_naam: KlantA
+
+#CUSTOM-SITE
+color: #00FF00
+
+#WORDPRESS
+role: wordpress
+
+# WordPress config
+wordpress_volume: wordpress
+
+# MariaDB config
+mariadb_volume: mariadb
+mariadb_root_password: Password123@
+mariadb_user_password: Password123@
+mariadb_database: db
+mariadb_user: mysqluser
+
+#JOOMLA
