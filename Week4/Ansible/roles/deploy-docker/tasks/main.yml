@@ -1,3 +1,17 @@
 #SPDX-License-Identifier: MIT-0
 ---
 # tasks file for deploy-docker
+- name: Update package list
+  yum:
+    update_cache: yes
+
+- name: Install Docker
+  yum:
+    name: docker
+    state: present
+
+- name: Start Docker service
+  service:
+    name: docker
+    state: started
+    enabled: true
