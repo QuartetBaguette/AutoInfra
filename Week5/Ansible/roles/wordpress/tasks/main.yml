@@ -1,0 +1,30 @@
+---
+- name: Deploy MariaDB server
+  docker_container:
+    image: mariadb
+    name: mariadb
+    volumes:
+      - "{{ mariadb_volume }}:/var/lib/mysql"
+    env:
+      MYSQL_ROOT_PASSWORD: "{{ mariadb_root_password }}"
+      MYSQL_PASSWORD: "{{ mariadb_user_password }}"
+      MYSQL_DATABASE: "{{ mariadb_database }}"
+      MYSQL_USER: "{{ mariadb_user }}"
+
+- name: Start WordPress container
+  docker_container:
+    name: wordpress
+    image: wordpress
+    state: started
+    restart_policy: always
+    ports:
+      - "80:80"
+    links:
+      - "{{ mariadb_volume }}:/var/lib/mysql"
+    volumes:
+      - "{{ wordpress_volume }}:/var/www/html"
+    env:
+      MYSQL_PASSWORD: "{{ mariadb_user_password }}"
+      MYSQL_DATABASE: "{{ mariadb_database }}"
+      MYSQL_USER: "{{ mariadb_user }}"
+      MYSQL_HOST: mariadb

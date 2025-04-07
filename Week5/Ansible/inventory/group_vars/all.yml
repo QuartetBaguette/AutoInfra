@@ -1,0 +1,3 @@
+ansible_user: ec2-user
+private_key_file: ../../labsuser.pem
+host_key_checking: False

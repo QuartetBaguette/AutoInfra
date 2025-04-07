@@ -1,0 +1,16 @@
+---
+- name: Install Httpd
+  yum:
+    name: httpd
+    state: present
+
+- name: Make sure Httpd is started
+  systemd:
+    name: httpd
+    state: started
+    enabled: true
+
+- name: Website template deploy
+  template:
+    src: index.html.j2
+    dest: /var/www/html/index.html
