@@ -1,32 +1,32 @@
 ---
 - name: Deploy MySQL server
   docker_container:
-    image: mysql
-    name: mysql
-    ports:
-      - "3306:3306"
-    volumes:
-      - "/var/lib/mysql:/var/lib/mysql"
+    image: mysql:8
+    name: joomladb
     env:
       MYSQL_ROOT_PASSWORD: Password123@
       MYSQL_PASSWORD: Password123@
       MYSQL_DATABASE: joomla
       MYSQL_USER: mysqluser
+    ports:
+      - "3306:3306"
+    volumes:
+      - "/var/lib/joomladb:/var/lib/mysql"
+    restart_policy: always
 
-- name: Start een Joomla-container
+- name: Start een Joomla container
   docker_container:
     name: joomla
     image: joomla
     links: 
-      - mysql:db
-    state: started
-    restart_policy: always
+      - joomladb:db
     ports:
       - "80:80"
     volumes:
-      - "joomla:/var/www/html"
+      - "/var/www/joomla:/var/www/html"
     env:
-      JOOMLA_DB_HOST: "mariadb:3306"
+      JOOMLA_DB_HOST: "joomladb:3306"
       JOOMLA_DB_USER: "mysqluser"
       JOOMLA_DB_PASSWORD: "Password123@"
       JOOMLA_DB_NAME: "joomla"
+    restart_policy: always

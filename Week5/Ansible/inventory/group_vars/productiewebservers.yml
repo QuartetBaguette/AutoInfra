@@ -15,3 +15,11 @@ mariadb_database: db
 mariadb_user: mysqluser
 
 #JOOMLA
+joomla_volume: joomla
+
+# WORDPRESS config
+joomla_mysql_volume: mariadb
+joomla_mysql_root_password: Password123@
+joomla_mysql_user_password: Password123@
+joomla_mysql_database: db
+joomla_mysql_user: mysqluser
