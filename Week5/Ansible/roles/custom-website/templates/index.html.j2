@@ -3,5 +3,6 @@
     <body style="background-color: {{ color }};">
       <h1>Welkom bij {{ klant_naam }}! Gemaakt door 552512</h1>
       <p>Deze webserver is succesvol geïnstalleerd met Ansible Roles</p>
+      <p>Ip adres van deze server: {{ ansible_default_ipv4.address }}</p>
     </body>
 </html>

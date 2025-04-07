@@ -1,3 +1,7 @@
 #SPDX-License-Identifier: MIT-0
 ---
 # handlers file for loadbalancer
+- name: Restart Nginx
+  systemd:
+    name: nginx
+    state: restarted

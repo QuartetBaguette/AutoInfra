@@ -1,7 +1,7 @@
 ---
 - name: Kies het type website
   hosts: productiewebservers
-  gather_facts: false
+  gather_facts: true
   become: true
 
   vars_prompt:
