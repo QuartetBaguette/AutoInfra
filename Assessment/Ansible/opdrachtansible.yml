@@ -1,0 +1,25 @@
+---
+- hosts: webserver1
+  remote_user: ec2-user
+  become: true
+  tasks:  
+  - name: Install basic utilities
+    yum:
+      name:
+       - git
+       - vim
+       - htop
+      state: present
+  - name: Install 
+    yum: 
+       pkg: httpd 
+       state: latest
+  - name: copy
+    template:
+      src: index.html.j2
+      dest: /var/www/html/index.html
+  - name: start
+    service:
+      name: httpd
+      state: started
+      
