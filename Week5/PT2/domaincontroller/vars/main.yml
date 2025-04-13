@@ -1,0 +1,5 @@
+#SPDX-License-Identifier: MIT-0
+---
+# vars file for domaincontroller
+domain_name: "autoinfra552512.local"
+safe_mode_password: "Peanut2703!@"

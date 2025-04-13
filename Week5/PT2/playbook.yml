@@ -1,0 +1,5 @@
+---
+- name: Configure Windows Server as DC
+  hosts: windows2022
+  roles:
+    - domaincontroller
