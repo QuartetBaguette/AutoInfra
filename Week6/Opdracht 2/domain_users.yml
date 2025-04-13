@@ -1,0 +1,14 @@
+---
+users:
+  rubenvandam:
+    firstname: ruben
+    surname: vandam
+    password: Better2gether!
+  pietvandam:
+    firstname: piet
+    surname: vandam
+    password: Better2gether!
+  gertvandam:
+    firstname: gert
+    surname: vandam
+    password: Better2gether!

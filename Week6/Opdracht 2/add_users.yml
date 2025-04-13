@@ -1,0 +1,27 @@
+---
+- hosts: windows2022
+  gather_facts: false
+  vars_files:
+    - ./domain_users.yml
+  tasks:
+  - name: Add Users
+    win_domain_user:
+      name: "{{ item.key }}"
+      firstname: "{{ item.value.firstname}}"
+      surname: "{{ item.value.surname}}"
+      password: "{{ item.value.password }}"
+      password_expired: false
+      enabled: true
+      user_cannot_change_password: true
+      attributes:
+        displayName: '{{ item.value.firstname }} {{ item.value.surname }}'
+    loop: "{{ lookup('dict', users) }}"
+
+  - name: Re-enable disabled users
+    win_domain_user:
+      name: "{{ item.key }}"
+      enabled: true
+    when: item.value.enabled is defined and item.value.enabled == false
+    loop: "{{ lookup('dict', users) }}"
+    loop_control:
+      label: "{{ item.key }}"
